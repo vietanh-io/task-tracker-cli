@@ -1,0 +1,48 @@
+# Task Tracker CLI 🚀
+
+A simple, lightweight Command Line Interface (CLI) application to manage your daily tasks, built with **Node.js**.
+
+Data is stored locally in a JSON file (`tasks.json`), ensuring your task list persists even after you close the application.
+
+## ✨ Features
+
+- [x] **Add new tasks**
+- [x] **Update task descriptions**
+- [x] **Delete tasks**
+- [x] **Update task status**:
+    - `todo` (Default)
+    - `in-progress`
+    - `done`
+- [x] **List tasks**: View all tasks or filter by status.
+- [x] **Data Persistence**: Tasks are saved automatically to a JSON file.
+
+## 🛠️ Prerequisites
+
+- **Node.js**: Version 18 or higher (recommended for ES Modules support).
+
+## 🚀 Installation & Usage
+
+1. **Clone the repository (or download the source code):**
+   ```bash
+   git clone https://github.com/vietanh-io/task-tracker-cli.git
+   cd task-tracker-cli
+1. **Run:**
+   ```bash
+    npm run dev
+    # Adding a new task
+    task-cli add "Buy groceries"
+# Output: Task added successfully (ID: 1)
+# Updating and deleting tasks
+    task-cli update 1 "Buy groceries and cook dinner"
+    task-cli delete 1
+# Marking a task as in progress or done
+    task-cli mark-in-progress 1
+    task-cli mark-done 1
+# Listing all tasks
+    task-cli list
+# Listing tasks by status
+    task-cli list done 
+    task-cli list todo
+    task-cli list in-progress
+
+You can find my solution on roadmap here: https://roadmap.sh/projects/task-tracker
