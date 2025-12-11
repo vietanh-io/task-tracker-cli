@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import fs from "fs/promises";
 import * as path from "path";
 import { fileURLToPath } from "url";
 
@@ -7,28 +7,38 @@ const __dirname = path.dirname(__filename);
 
 const FILE_PATH = path.join(__dirname, "./tasks.json");
 
+
 let tasks = [];
+
+const checkFileExists = async (filepath) => {
+    try {
+        await fs.access(filepath);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
 
 const loadTask = async () => {
     try {
-        if (fs.existsSync(FILE_PATH)) {
-            const data = fs.readFileSync(FILE_PATH, 'utf-8');
-            if (data.trim().length > 0) {
-                // parse json to save to tasks[]
-                tasks = JSON.parse(data);
-            } else {
-                tasks = [];
-            }
+        if (await checkFileExists(FILE_PATH)) {
+            const data = await fs.readFile(FILE_PATH, 'utf-8');
+
+            tasks = data ? JSON.parse(data) : [];
         }
-    } catch (error) {
-        console.error("Lỗi khi tải tasks:", error);
+        else {
+            tasks = [];
+        }
+    }
+    catch (error) {
+        console.error("Error when loading all tasks:", error);
     }
 }
 
 const saveTask = async () => {
     try {
         // overwrite existing file
-        fs.writeFileSync(FILE_PATH, JSON.stringify(tasks, null, 2));
+        await fs.writeFile(FILE_PATH, JSON.stringify(tasks, null, 2));
     } catch (error) {
         console.error("Error when saving a new task: ", error);
     }
@@ -65,7 +75,7 @@ export const updateTask = async (id, description) => {
             existTask.updatedAt = new Date().toISOString();
 
             await saveTask();
-            console.log(`Task updated successfully (ID: ${newTask.id})`);
+            console.log(`Task updated successfully (ID: ${existTask.id})`);
         } else {
             console.log(`Cannot find id ${id}`);
         }

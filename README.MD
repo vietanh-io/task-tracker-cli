@@ -30,10 +30,10 @@ Data is stored locally in a JSON file (`tasks.json`), ensuring your task list pe
    ```bash
     npm run dev
     # Adding a new task
-    task-cli add "Buy groceries"
+    task-cli add Buy groceries
 # Output: Task added successfully (ID: 1)
 # Updating and deleting tasks
-    task-cli update 1 "Buy groceries and cook dinner"
+    task-cli update 1 Buy groceries and cook dinner
     task-cli delete 1
 # Marking a task as in progress or done
     task-cli mark-in-progress 1

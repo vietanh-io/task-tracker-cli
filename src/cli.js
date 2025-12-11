@@ -1,5 +1,5 @@
-import * as taskManager from "./taskManager.js";
 import { createInterface } from 'node:readline';
+import { addTask, deleteTask, listTasks, markTaskProgress, updateTask } from './taskManager.js';
 
 // create cli
 const rl = createInterface({
@@ -21,36 +21,37 @@ rl.on('line', (line) => {
     switch (command) {
         case "add": {
             const description = params.join(" "); // Join all remaining parameters as the task description
-            taskManager.addTask(description); // Call the addTask method
+            addTask(description); // Call the addTask method
             break;
         }
 
         case "update": {
             const taskId = parseInt(params[0]); // Extract task ID
             const updatedDescription = params.slice(1).join(" "); // Get the new description
-            taskManager.updateTask(taskId, updatedDescription); // Call the updateTask method
+            updateTask(taskId, updatedDescription); // Call the updateTask method
             break;
         }
 
         case "delete": {
-            taskManager.deleteTask(params.slice(1).join(" ")); // Delete task by ID
+            const taskId = parseInt(params[0]);
+            deleteTask(taskId); // Delete task by ID
             break;
         }
 
         case "mark-in-progress": {
             const taskId = parseInt(params[0]);
-            taskManager.markTaskProgress(taskId, 'in-progress'); // Mark task as 'in-progress'
+            markTaskProgress(taskId, 'in-progress'); // Mark task as 'in-progress'
             break;
         }
 
         case "mark-done": {
             const taskId = parseInt(params[0]);
-            taskManager.markTaskProgress(taskId, 'done'); // Mark task as 'done'
+            markTaskProgress(taskId, 'done'); // Mark task as 'done'
             break;
         }
 
         case "list": {
-            taskManager.listTasks(params[0]); // List tasks, possibly filtered by status (todo, done, in-progress)
+            listTasks(params[0]); // List tasks, possibly filtered by status (todo, done, in-progress)
             break;
         }
 
